@@ -819,13 +819,13 @@ Add a personal, memorable feature that recommends the best time to walk Pixel.
 
 ## Steps
 
-- [ ] Create:
+- [x] Create:
 
 ```text
 src/server/weather/dogWalkScore.ts
 ```
 
-- [ ] Use inputs:
+- [x] Use inputs:
   - Temperature
   - Precipitation chance
   - Wind speed
@@ -834,7 +834,7 @@ src/server/weather/dogWalkScore.ts
   - Air quality later
   - Sunrise/sunset later
 
-- [ ] Implement simple scoring:
+- [x] Implement simple scoring:
   - Start at 10.
   - Subtract for rain.
   - Subtract for extreme heat/cold.
@@ -842,7 +842,7 @@ src/server/weather/dogWalkScore.ts
   - Subtract for poor air quality.
   - Bonus for daylight.
 
-- [ ] Define output:
+- [x] Define output:
 
 ```ts
 export type DogWalkRecommendation = {
@@ -852,20 +852,20 @@ export type DogWalkRecommendation = {
 };
 ```
 
-- [ ] Add unit tests for scoring:
+- [x] Add unit tests for scoring:
   - Rain lowers score.
   - Extreme heat lowers score.
   - Comfortable dry evening scores highly.
   - High wind lowers score.
 
-- [ ] Add `DogWalkForecastPanel` to the rotating weather screens.
+- [x] Add `DogWalkForecastPanel` to the rotating weather screens.
 
 ## Exit criteria
 
-- [ ] Dog walk scoring function works.
-- [ ] Unit tests exist.
-- [ ] `/weather` displays best dog walk window.
-- [ ] The output is understandable and useful.
+- [x] Dog walk scoring function works.
+- [x] Unit tests exist.
+- [x] `/weather` displays best dog walk window.
+- [x] The output is understandable and useful.
 
 ---
 

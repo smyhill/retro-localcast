@@ -4,6 +4,7 @@ import { RetroClock } from "./RetroClock";
 import { RotatingWeatherScreen } from "./RotatingWeatherScreen";
 import { getCachedWeatherSnapshot } from "@/server/cache/weatherCache";
 import { listRecentNews } from "@/server/news/newsService";
+import { getDogWalkRecommendation } from "@/server/weather/dogWalkScore";
 import type { WeatherSnapshot } from "@/server/weather/types";
 
 const BETHESDA_LOCATION = {
@@ -94,7 +95,12 @@ async function getBethesdaWeather() {
 }
 
 function mapSnapshotToDisplayWeather(snapshot: WeatherSnapshot) {
-  const currentHour = snapshot.hourly[0];
+  const dogWalk = getDogWalkRecommendation({
+    hourly: snapshot.hourly.map((hour) => ({
+      ...hour,
+      windSpeed: snapshot.current.windSpeed,
+    })),
+  });
 
   return {
     ...mockWeather,
@@ -128,12 +134,7 @@ function mapSnapshotToDisplayWeather(snapshot: WeatherSnapshot) {
             description: alert.description,
           }))
         : mockWeather.alerts,
-    dogWalk: {
-      ...mockWeather.dogWalk,
-      reason: currentHour
-        ? `${currentHour.condition} with ${currentHour.precipitationChance ?? 0}% rain chance.`
-        : mockWeather.dogWalk.reason,
-    },
+    dogWalk,
   };
 }
 
