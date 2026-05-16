@@ -5,7 +5,7 @@ export const mockWeather = {
     temperature: 72,
     condition: "Partly Cloudy",
     humidity: 61,
-    windSpeed: 8,
+    windSpeed: "8 mph",
     feelsLike: 74,
     pressure: "30.08 in",
     visibility: "10 mi",
@@ -45,4 +45,5 @@ export const mockWeather = {
   },
 };
 
-export type MockWeather = typeof mockWeather;
+export type WeatherDisplay = typeof mockWeather;
+export type MockWeather = WeatherDisplay;

@@ -1,13 +1,19 @@
-import { CurrentConditionsPanel } from "./CurrentConditionsPanel";
-import { DogWalkForecastPanel } from "./DogWalkForecastPanel";
-import { HourlyForecastPanel } from "./HourlyForecastPanel";
 import { mockWeather } from "./mockWeather";
 import { NewsTicker } from "./NewsTicker";
 import { RetroClock } from "./RetroClock";
-import { SevenDayForecastPanel } from "./SevenDayForecastPanel";
-import { WeatherAlertPanel } from "./WeatherAlertPanel";
+import { RotatingWeatherScreen } from "./RotatingWeatherScreen";
+import type { WeatherSnapshot } from "@/server/weather/types";
+import { getWeatherSnapshot } from "@/server/weather/weatherService";
 
-export function WeatherChannelShell() {
+const BETHESDA_LOCATION = {
+  name: "Bethesda, MD",
+  latitude: 38.9847,
+  longitude: -77.0947,
+};
+
+export async function WeatherChannelShell() {
+  const weather = await getBethesdaWeather();
+
   return (
     <main className="bg-slate-950 px-4 py-6 text-white sm:px-6 lg:px-8">
       <div className="retro-screen relative mx-auto max-w-7xl overflow-hidden border-4 border-sky-200 bg-[linear-gradient(135deg,#041b45_0%,#062f6f_48%,#10172a_100%)] shadow-[0_0_32px_rgba(56,189,248,0.35)]">
@@ -18,7 +24,7 @@ export function WeatherChannelShell() {
                 Retro LocalCast
               </p>
               <h1 className="text-3xl font-black uppercase text-white sm:text-5xl">
-                {mockWeather.location}
+                {weather.location}
               </h1>
             </div>
             <div className="border-2 border-cyan-300 bg-slate-950 px-4 py-3 text-center">
@@ -32,41 +38,90 @@ export function WeatherChannelShell() {
                 Current
               </p>
               <p className="font-mono text-5xl font-black text-amber-300">
-                {mockWeather.current.temperature}&deg;
+                {weather.current.temperature}&deg;
               </p>
             </div>
           </header>
 
-          <section className="grid gap-5 p-5 xl:grid-cols-[1.2fr_0.8fr]">
-            <div className="grid gap-5">
-              <CurrentConditionsPanel weather={mockWeather} />
-              <HourlyForecastPanel weather={mockWeather} />
-              <WeatherAlertPanel weather={mockWeather} />
-            </div>
-            <div className="grid gap-5">
-              <SevenDayForecastPanel weather={mockWeather} />
-              <div className="border-4 border-sky-300 bg-slate-950/80 p-5 shadow-[8px_8px_0_#061533]">
-                <h2 className="border-b-4 border-sky-300 pb-3 font-mono text-2xl font-black uppercase text-white">
-                  Local Radar
-                </h2>
-                <div className="mt-4 aspect-video border-2 border-sky-700 bg-[linear-gradient(90deg,rgba(34,211,238,0.22)_1px,transparent_1px),linear-gradient(rgba(34,211,238,0.18)_1px,transparent_1px),radial-gradient(circle_at_65%_45%,rgba(250,204,21,0.85),transparent_8%),radial-gradient(circle_at_42%_52%,rgba(34,197,94,0.7),transparent_12%),#082f49] bg-[length:32px_32px,32px_32px,100%_100%,100%_100%,100%_100%] p-4">
-                  <div className="flex h-full items-end justify-between font-mono text-xs font-black uppercase text-cyan-100">
-                    <span>Bethesda</span>
-                    <span>Radar Placeholder</span>
-                  </div>
-                </div>
-              </div>
-              <DogWalkForecastPanel weather={mockWeather} />
-            </div>
-          </section>
+          <RotatingWeatherScreen weather={weather} />
 
-          <NewsTicker weather={mockWeather} />
+          <NewsTicker weather={weather} />
           <footer className="flex flex-wrap items-center justify-between gap-3 bg-blue-950 px-5 py-3 font-mono text-xs font-bold uppercase text-cyan-100">
-            <span>Mock data only</span>
-            <span>Issued {mockWeather.issuedAt}</span>
+            <span>{weather === mockWeather ? "Mock fallback data" : "NWS data"}</span>
+            <span>Issued {weather.issuedAt}</span>
           </footer>
         </div>
       </div>
     </main>
   );
+}
+
+async function getBethesdaWeather() {
+  try {
+    const snapshot = await getWeatherSnapshot(
+      BETHESDA_LOCATION.latitude,
+      BETHESDA_LOCATION.longitude,
+    );
+
+    return mapSnapshotToDisplayWeather(snapshot);
+  } catch {
+    return mockWeather;
+  }
+}
+
+function mapSnapshotToDisplayWeather(snapshot: WeatherSnapshot) {
+  const currentHour = snapshot.hourly[0];
+
+  return {
+    ...mockWeather,
+    location: BETHESDA_LOCATION.name,
+    issuedAt: formatDisplayTime(new Date()),
+    current: {
+      ...mockWeather.current,
+      temperature: snapshot.current.temperature,
+      condition: snapshot.current.condition,
+      humidity: snapshot.current.humidity ?? mockWeather.current.humidity,
+      windSpeed: snapshot.current.windSpeed,
+      feelsLike: snapshot.current.temperature,
+    },
+    hourly: snapshot.hourly.slice(0, 5).map((hour) => ({
+      time: formatHourLabel(hour.startTime),
+      temperature: hour.temperature,
+      condition: hour.condition,
+      precipitation: hour.precipitationChance ?? 0,
+    })),
+    daily: snapshot.daily.slice(0, 7).map((day) => ({
+      day: day.name,
+      high: day.temperature,
+      low: day.temperature,
+      condition: day.condition,
+    })),
+    alerts:
+      snapshot.alerts.length > 0
+        ? snapshot.alerts.map((alert) => ({
+            title: alert.title,
+            severity: alert.severity ?? "Unknown",
+            description: alert.description,
+          }))
+        : mockWeather.alerts,
+    dogWalk: {
+      ...mockWeather.dogWalk,
+      reason: currentHour
+        ? `${currentHour.condition} with ${currentHour.precipitationChance ?? 0}% rain chance.`
+        : mockWeather.dogWalk.reason,
+    },
+  };
+}
+
+function formatHourLabel(value: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+  }).format(new Date(value));
+}
+
+function formatDisplayTime(value: Date) {
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(value);
 }

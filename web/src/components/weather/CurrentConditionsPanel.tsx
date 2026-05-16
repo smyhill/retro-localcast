@@ -35,7 +35,7 @@ export function CurrentConditionsPanel({ weather }: CurrentConditionsPanelProps)
         <div className="border-2 border-sky-700 bg-blue-950 p-3">
           <dt className="font-mono uppercase text-cyan-200">Wind</dt>
           <dd className="mt-1 text-2xl font-black text-white">
-            {weather.current.windSpeed} mph
+            {weather.current.windSpeed}
           </dd>
         </div>
         <div className="border-2 border-sky-700 bg-blue-950 p-3">

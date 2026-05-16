@@ -350,37 +350,37 @@ Make the weather app feel like a real local broadcast loop.
 
 ## Steps
 
-- [ ] Create:
+- [x] Create:
 
 ```text
 src/components/weather/RotatingWeatherScreen.tsx
 ```
 
-- [ ] Define screen IDs:
+- [x] Define screen IDs:
 
 ```ts
 const screens = ["current", "hourly", "daily", "alerts", "dogWalk", "news"];
 ```
 
-- [ ] Cycle through panels every 8-12 seconds.
+- [x] Cycle through panels every 8-12 seconds.
 
-- [ ] Add a visible label showing the current screen name.
+- [x] Add a visible label showing the current screen name.
 
-- [ ] Add pause/resume behavior.
+- [x] Add pause/resume behavior.
 
-- [ ] Add keyboard controls:
+- [x] Add keyboard controls:
   - Left arrow: previous screen
   - Right arrow: next screen
   - Space: pause/resume
 
-- [ ] Ensure all screens still use mock data.
+- [x] Ensure all screens still use mock data.
 
 ## Exit criteria
 
-- [ ] `/weather` automatically rotates through panels.
-- [ ] Keyboard controls work.
-- [ ] Pause/resume works.
-- [ ] No real API calls are required yet.
+- [x] `/weather` automatically rotates through panels.
+- [x] Keyboard controls work.
+- [x] Pause/resume works.
+- [x] No real API calls are required yet.
 
 ---
 
@@ -406,7 +406,7 @@ lat/lon
 
 ## Steps
 
-- [ ] Create weather server modules:
+- [x] Create weather server modules:
 
 ```text
 src/server/weather/nwsClient.ts
@@ -414,7 +414,7 @@ src/server/weather/weatherService.ts
 src/server/weather/types.ts
 ```
 
-- [ ] Define the normalized app type:
+- [x] Define the normalized app type:
 
 ```ts
 export type WeatherSnapshot = {
@@ -451,42 +451,42 @@ export type WeatherSnapshot = {
 };
 ```
 
-- [ ] Implement `nwsClient.ts`:
+- [x] Implement `nwsClient.ts`:
   - Fetch point metadata.
   - Fetch daily forecast.
   - Fetch hourly forecast.
   - Fetch active alerts.
 
-- [ ] Implement `weatherService.ts`:
+- [x] Implement `weatherService.ts`:
   - Accept lat/lon.
   - Call NWS client.
   - Convert provider responses into `WeatherSnapshot`.
   - Handle provider errors cleanly.
 
-- [ ] Create API route:
+- [x] Create API route:
 
 ```text
 src/app/api/weather/route.ts
 ```
 
-- [ ] Support this request shape:
+- [x] Support this request shape:
 
 ```text
-/api/weather?lat=39.1732&lon=-77.2717
+/api/weather?lat=38.9847&lon=-77.0947
 ```
 
-- [ ] Return normalized weather data.
+- [x] Return normalized weather data.
 
-- [ ] Update `/weather` to fetch real weather for the hardcoded default location.
+- [x] Update `/weather` to fetch real weather for the hardcoded default location.
 
 ## Exit criteria
 
-- [ ] `/api/weather` returns real normalized weather data.
-- [ ] `/weather` displays real current conditions.
-- [ ] `/weather` displays real hourly forecast.
-- [ ] `/weather` displays real daily forecast.
-- [ ] `/weather` displays real weather alerts.
-- [ ] The UI still works if the provider fails.
+- [x] `/api/weather` returns real normalized weather data.
+- [x] `/weather` displays real current conditions.
+- [x] `/weather` displays real hourly forecast.
+- [x] `/weather` displays real daily forecast.
+- [x] `/weather` displays real weather alerts.
+- [x] The UI still works if the provider fails.
 
 ---
 
