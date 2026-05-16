@@ -498,9 +498,9 @@ Add local database infrastructure and store locations/weather snapshots.
 
 ## Steps
 
-- [ ] Create root `docker-compose.yml`.
+- [x] Create root `docker-compose.yml`.
 
-- [ ] Add Postgres and Redis:
+- [x] Add Postgres and Redis:
 
 ```yaml
 services:
@@ -519,26 +519,26 @@ services:
       - "6379:6379"
 ```
 
-- [ ] Start services:
+- [x] Start services:
 
 ```bash
 docker compose up -d
 ```
 
-- [ ] Install Prisma inside `/web`:
+- [x] Install Prisma inside `/web`:
 
 ```bash
 npm install prisma @prisma/client
 npx prisma init
 ```
 
-- [ ] Configure `.env`:
+- [x] Configure `.env`:
 
 ```env
 DATABASE_URL="postgresql://app:app@localhost:5432/personal_site"
 ```
 
-- [ ] Define initial Prisma models:
+- [x] Define initial Prisma models:
 
 ```prisma
 model Location {
@@ -568,34 +568,34 @@ model WeatherSnapshot {
 }
 ```
 
-- [ ] Run migration:
+- [x] Run migration:
 
 ```bash
 npx prisma migrate dev --name init
 ```
 
-- [ ] Create seed script:
+- [x] Create seed script:
 
 ```text
 prisma/seed.ts
 ```
 
-- [ ] Seed these locations:
+- [x] Seed these locations:
   - Germantown, MD
   - Bethesda, MD
   - Washington, DC
   - Syracuse, NY
 
-- [ ] Run seed.
+- [x] Run seed.
 
 ## Exit criteria
 
-- [ ] Postgres runs locally.
-- [ ] Redis runs locally.
-- [ ] Prisma is configured.
-- [ ] Migrations work.
-- [ ] Default locations are seeded.
-- [ ] App can read locations from Postgres.
+- [x] Postgres runs locally.
+- [x] Redis runs locally.
+- [x] Prisma is configured.
+- [x] Migrations work.
+- [x] Default locations are seeded.
+- [x] App can read locations from Postgres.
 
 ---
 
