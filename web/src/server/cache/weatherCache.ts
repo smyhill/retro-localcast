@@ -56,6 +56,19 @@ export async function getCachedWeatherSnapshot(
   return snapshot;
 }
 
+export async function cacheWeatherSnapshot(
+  latitude: number,
+  longitude: number,
+  snapshot: WeatherSnapshot,
+  locationId?: string,
+) {
+  await writeCachedSnapshot(buildProviderWeatherCacheKey(latitude, longitude), snapshot);
+
+  if (locationId) {
+    await writeCachedSnapshot(buildLatestWeatherCacheKey(locationId), snapshot);
+  }
+}
+
 async function readCachedSnapshot(cacheKey: string) {
   try {
     const redis = getRedisClient();

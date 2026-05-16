@@ -19,3 +19,12 @@ export function getRedisClient() {
 
   return globalForRedis.redis;
 }
+
+export async function closeRedisClient() {
+  if (!globalForRedis.redis) {
+    return;
+  }
+
+  await globalForRedis.redis.quit();
+  globalForRedis.redis = undefined;
+}
