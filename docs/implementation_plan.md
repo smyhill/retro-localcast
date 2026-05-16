@@ -262,7 +262,7 @@ Build the first visual version of the retro weather channel using mock data.
 
 ## Steps
 
-- [ ] Create weather components:
+- [x] Create weather components:
 
 ```text
 src/components/weather/WeatherChannelShell.tsx
@@ -275,17 +275,17 @@ src/components/weather/RetroClock.tsx
 src/components/weather/DogWalkForecastPanel.tsx
 ```
 
-- [ ] Create a mock weather data file:
+- [x] Create a mock weather data file:
 
 ```text
 src/components/weather/mockWeather.ts
 ```
 
-- [ ] Use this initial data shape:
+- [x] Use this initial data shape:
 
 ```ts
 export const mockWeather = {
-  location: "Germantown, MD",
+  location: "Bethesda, MD",
   current: {
     temperature: 72,
     condition: "Partly Cloudy",
@@ -307,7 +307,7 @@ export const mockWeather = {
 };
 ```
 
-- [ ] Build `WeatherChannelShell` with:
+- [x] Build `WeatherChannelShell` with:
   - Top header bar
   - Main content area
   - Lower ticker
@@ -315,9 +315,9 @@ export const mockWeather = {
   - Current temperature
   - Large retro panel area
 
-- [ ] Render static mock panels on `/weather`.
+- [x] Render static mock panels on `/weather`.
 
-- [ ] Add retro styling:
+- [x] Add retro styling:
   - Dark blue backgrounds
   - Blocky cards
   - Big white/yellow text
@@ -326,7 +326,7 @@ export const mockWeather = {
   - Simple gradients
   - Boxy 90s UI
 
-- [ ] Add optional effects:
+- [x] Add optional effects:
   - Subtle screen glow
   - Scanline overlay
   - Animated lower-third ticker
@@ -335,10 +335,10 @@ export const mockWeather = {
 
 ## Exit criteria
 
-- [ ] `/weather` displays a convincing retro weather channel UI.
-- [ ] The UI uses mock data only.
-- [ ] The UI is responsive enough for desktop.
-- [ ] The page looks good enough to demo.
+- [x] `/weather` displays a convincing retro weather channel UI.
+- [x] The UI uses mock data only.
+- [x] The UI is responsive enough for desktop.
+- [x] The page looks good enough to demo.
 
 ---
 

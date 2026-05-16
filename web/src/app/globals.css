@@ -24,3 +24,47 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.retro-screen::before {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  content: "";
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.08) 0,
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 1px,
+    transparent 5px
+  );
+  mix-blend-mode: soft-light;
+}
+
+.retro-screen::after {
+  position: absolute;
+  inset: 0;
+  z-index: 19;
+  pointer-events: none;
+  content: "";
+  background: radial-gradient(
+    circle at center,
+    transparent 0,
+    transparent 58%,
+    rgba(2, 6, 23, 0.58) 100%
+  );
+}
+
+.retro-ticker {
+  animation: retro-ticker-scroll 28s linear infinite;
+}
+
+@keyframes retro-ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
