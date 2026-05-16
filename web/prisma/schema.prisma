@@ -32,3 +32,16 @@ model WeatherSnapshot {
 
   @@index([locationId, fetchedAt])
 }
+
+model NewsItem {
+  id          String    @id @default(cuid())
+  source      String
+  title       String
+  url         String    @unique
+  summary     String?
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([publishedAt])
+  @@index([source])
+}

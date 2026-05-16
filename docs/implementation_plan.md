@@ -734,13 +734,13 @@ Use general local news, weather, traffic, community, and events feeds. Do not bu
 
 ## Steps
 
-- [ ] Install RSS parser:
+- [x] Install RSS parser:
 
 ```bash
 npm install rss-parser
 ```
 
-- [ ] Create:
+- [x] Create:
 
 ```text
 src/server/news/rssClient.ts
@@ -748,7 +748,7 @@ src/server/news/newsService.ts
 src/workers/newsWorker.ts
 ```
 
-- [ ] Define normalized type:
+- [x] Define normalized type:
 
 ```ts
 export type NewsItem = {
@@ -760,7 +760,7 @@ export type NewsItem = {
 };
 ```
 
-- [ ] Add Prisma model:
+- [x] Add Prisma model:
 
 ```prisma
 model NewsItem {
@@ -777,37 +777,37 @@ model NewsItem {
 }
 ```
 
-- [ ] Run migration:
+- [x] Run migration:
 
 ```bash
 npx prisma migrate dev --name add_news_items
 ```
 
-- [ ] Implement RSS ingestion:
+- [x] Implement RSS ingestion:
   - Fetch configured feeds.
   - Normalize feed items.
   - Deduplicate by URL.
   - Store in Postgres.
   - Log ingestion results.
 
-- [ ] Create API route:
+- [x] Create API route:
 
 ```text
 src/app/api/news/route.ts
 ```
 
-- [ ] Update `NewsTicker.tsx` to fetch and display:
+- [x] Update `NewsTicker.tsx` to fetch and display:
   - Headline
   - Source
   - Published time if available
 
 ## Exit criteria
 
-- [ ] RSS ingestion works.
-- [ ] News items are stored in Postgres.
-- [ ] Duplicate URLs are ignored.
-- [ ] `/api/news` returns recent items.
-- [ ] `/weather` shows real ticker items.
+- [x] RSS ingestion works.
+- [x] News items are stored in Postgres.
+- [x] Duplicate URLs are ignored.
+- [x] `/api/news` returns recent items.
+- [x] `/weather` shows real ticker items.
 
 ---
 

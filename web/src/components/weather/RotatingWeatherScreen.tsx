@@ -151,8 +151,9 @@ function NewsScreen({ weather }: RotatingWeatherScreenProps) {
       </h2>
       <div className="grid gap-3">
         {weather.news.map((item) => (
-          <article
+          <a
             key={item.title}
+            href={item.url}
             className="border-2 border-sky-600 bg-slate-950/75 p-4"
           >
             <p className="font-mono text-xs font-black uppercase text-cyan-200">
@@ -161,7 +162,7 @@ function NewsScreen({ weather }: RotatingWeatherScreenProps) {
             <h3 className="mt-2 text-2xl font-black uppercase text-amber-300">
               {item.title}
             </h3>
-          </article>
+          </a>
         ))}
       </div>
     </section>

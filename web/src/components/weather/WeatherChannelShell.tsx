@@ -3,6 +3,7 @@ import { NewsTicker } from "./NewsTicker";
 import { RetroClock } from "./RetroClock";
 import { RotatingWeatherScreen } from "./RotatingWeatherScreen";
 import { getCachedWeatherSnapshot } from "@/server/cache/weatherCache";
+import { listRecentNews } from "@/server/news/newsService";
 import type { WeatherSnapshot } from "@/server/weather/types";
 
 const BETHESDA_LOCATION = {
@@ -12,7 +13,11 @@ const BETHESDA_LOCATION = {
 };
 
 export async function WeatherChannelShell() {
-  const weather = await getBethesdaWeather();
+  const [weather, news] = await Promise.all([getBethesdaWeather(), getTickerNews()]);
+  const weatherWithNews = {
+    ...weather,
+    news,
+  };
 
   return (
     <main className="bg-slate-950 px-4 py-6 text-white sm:px-6 lg:px-8">
@@ -24,7 +29,7 @@ export async function WeatherChannelShell() {
                 Retro LocalCast
               </p>
               <h1 className="text-3xl font-black uppercase text-white sm:text-5xl">
-                {weather.location}
+                {weatherWithNews.location}
               </h1>
             </div>
             <div className="border-2 border-cyan-300 bg-slate-950 px-4 py-3 text-center">
@@ -38,22 +43,41 @@ export async function WeatherChannelShell() {
                 Current
               </p>
               <p className="font-mono text-5xl font-black text-amber-300">
-                {weather.current.temperature}&deg;
+                {weatherWithNews.current.temperature}&deg;
               </p>
             </div>
           </header>
 
-          <RotatingWeatherScreen weather={weather} />
+          <RotatingWeatherScreen weather={weatherWithNews} />
 
-          <NewsTicker weather={weather} />
+          <NewsTicker weather={weatherWithNews} />
           <footer className="flex flex-wrap items-center justify-between gap-3 bg-blue-950 px-5 py-3 font-mono text-xs font-bold uppercase text-cyan-100">
             <span>{weather === mockWeather ? "Mock fallback data" : "NWS data"}</span>
-            <span>Issued {weather.issuedAt}</span>
+            <span>Issued {weatherWithNews.issuedAt}</span>
           </footer>
         </div>
       </div>
     </main>
   );
+}
+
+async function getTickerNews() {
+  try {
+    const news = await listRecentNews(8);
+
+    if (news.length === 0) {
+      return mockWeather.news;
+    }
+
+    return news.map((item) => ({
+      title: item.title,
+      source: item.source,
+      url: item.url,
+      publishedAt: item.publishedAt,
+    }));
+  } catch {
+    return mockWeather.news;
+  }
 }
 
 async function getBethesdaWeather() {

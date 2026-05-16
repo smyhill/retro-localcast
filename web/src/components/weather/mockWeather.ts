@@ -34,9 +34,21 @@ export const mockWeather = {
     },
   ],
   news: [
-    { title: "Local forecast updated for Bethesda", source: "Retro LocalCast" },
-    { title: "Evening commute expected to stay dry", source: "Traffic Desk" },
-    { title: "Weekend outlook trends warmer", source: "Weather Center" },
+    {
+      title: "Local forecast updated for Bethesda",
+      source: "Retro LocalCast",
+      url: "#",
+    },
+    {
+      title: "Evening commute expected to stay dry",
+      source: "Traffic Desk",
+      url: "#",
+    },
+    {
+      title: "Weekend outlook trends warmer",
+      source: "Weather Center",
+      url: "#",
+    },
   ],
   dogWalk: {
     bestWindow: "6 PM - 8 PM",
