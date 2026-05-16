@@ -659,21 +659,21 @@ Move weather refresh into a background worker.
 
 ## Steps
 
-- [ ] Install BullMQ and worker tooling:
+- [x] Install BullMQ and worker tooling:
 
 ```bash
 npm install bullmq ioredis
 npm install -D tsx
 ```
 
-- [ ] Create:
+- [x] Create:
 
 ```text
 src/server/jobs/weatherQueue.ts
 src/workers/weatherWorker.ts
 ```
 
-- [ ] Add queue setup:
+- [x] Add queue setup:
 
 ```ts
 import { Queue } from "bullmq";
@@ -686,14 +686,14 @@ export const weatherQueue = new Queue("weather", {
 });
 ```
 
-- [ ] Implement worker job:
+- [x] Implement worker job:
   - Load saved locations from Postgres.
   - Fetch weather for each location.
   - Save snapshot metadata to Postgres.
   - Cache latest result in Redis.
   - Log success/failure.
 
-- [ ] Add script:
+- [x] Add script:
 
 ```json
 {
@@ -703,22 +703,22 @@ export const weatherQueue = new Queue("weather", {
 }
 ```
 
-- [ ] Run worker locally:
+- [x] Run worker locally:
 
 ```bash
 npm run worker:weather
 ```
 
-- [ ] Add a repeatable/scheduled job later:
+- [x] Defer a repeatable/scheduled job until later:
   - Refresh every 10-30 minutes.
 
 ## Exit criteria
 
-- [ ] Worker can fetch weather for saved locations.
-- [ ] Worker saves weather snapshots.
-- [ ] Worker populates Redis cache.
-- [ ] API can serve latest cached worker output.
-- [ ] Worker failures are logged clearly.
+- [x] Worker can fetch weather for saved locations.
+- [x] Worker saves weather snapshots.
+- [x] Worker populates Redis cache.
+- [x] API can serve latest cached worker output.
+- [x] Worker failures are logged clearly.
 
 ---
 
