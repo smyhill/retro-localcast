@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getWeatherSnapshot } from "@/server/weather/weatherService";
+import { getCachedWeatherSnapshot } from "@/server/cache/weatherCache";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const snapshot = await getWeatherSnapshot(latitude, longitude);
+    const snapshot = await getCachedWeatherSnapshot(latitude, longitude);
     return NextResponse.json(snapshot);
   } catch (error) {
     const message =

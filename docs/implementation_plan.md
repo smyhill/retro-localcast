@@ -607,47 +607,47 @@ Cache provider responses so the app is faster and avoids unnecessary API calls.
 
 ## Steps
 
-- [ ] Install Redis client:
+- [x] Install Redis client:
 
 ```bash
 npm install ioredis
 ```
 
-- [ ] Create:
+- [x] Create:
 
 ```text
 src/server/cache/redisClient.ts
 src/server/cache/weatherCache.ts
 ```
 
-- [ ] Add cache keys:
+- [x] Add cache keys:
 
 ```text
 weather:latest:{locationId}
 weather:provider:nws:{lat}:{lon}
 ```
 
-- [ ] Use TTLs:
+- [x] Use TTLs:
   - Current weather: 10 minutes
   - Hourly forecast: 30 minutes
   - Daily forecast: 1 hour
   - Alerts: 5 minutes
 
-- [ ] Update `/api/weather` to:
+- [x] Update `/api/weather` to:
   - Check Redis cache.
   - Return cached data on hit.
   - Fetch provider data on miss.
   - Store provider response in cache.
   - Return fresh data.
 
-- [ ] Log cache hits and misses.
+- [x] Log cache hits and misses.
 
 ## Exit criteria
 
-- [ ] Weather route uses Redis.
-- [ ] Cache hits avoid provider fetches.
-- [ ] Cache misses fetch and populate Redis.
-- [ ] The UI still works if Redis is unavailable.
+- [x] Weather route uses Redis.
+- [x] Cache hits avoid provider fetches.
+- [x] Cache misses fetch and populate Redis.
+- [x] The UI still works if Redis is unavailable.
 
 ---
 

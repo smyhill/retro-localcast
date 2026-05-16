@@ -2,8 +2,8 @@ import { mockWeather } from "./mockWeather";
 import { NewsTicker } from "./NewsTicker";
 import { RetroClock } from "./RetroClock";
 import { RotatingWeatherScreen } from "./RotatingWeatherScreen";
+import { getCachedWeatherSnapshot } from "@/server/cache/weatherCache";
 import type { WeatherSnapshot } from "@/server/weather/types";
-import { getWeatherSnapshot } from "@/server/weather/weatherService";
 
 const BETHESDA_LOCATION = {
   name: "Bethesda, MD",
@@ -58,7 +58,7 @@ export async function WeatherChannelShell() {
 
 async function getBethesdaWeather() {
   try {
-    const snapshot = await getWeatherSnapshot(
+    const snapshot = await getCachedWeatherSnapshot(
       BETHESDA_LOCATION.latitude,
       BETHESDA_LOCATION.longitude,
     );
